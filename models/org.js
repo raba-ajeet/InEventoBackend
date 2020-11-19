@@ -1,0 +1,38 @@
+const mongoose = require('mongoose');
+
+var orgSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true,
+        maxlength:32,
+        trim:true,
+    },
+    email:{
+        type:String,
+        trim:true,
+        required:true,
+        unique:true,
+    },
+    password:{
+        type:String,
+        required:true,
+    },
+    photo:{
+        data:Buffer,
+        contentType:String,
+    },
+    eventList:{
+        type:Array,
+        default:[],
+    }
+
+},{timestamps:true});
+
+
+orgSchema.methods = {
+    authenticate: function (password) {
+        return this.password==password;
+    }
+}
+
+module.exports= mongoose.model("Org",orgSchema);
