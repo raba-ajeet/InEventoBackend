@@ -33,20 +33,7 @@ exports.getEventList = (req,res) => {
     })
 }
 
-// exports.pushEventInEventList = (req,res,next) => {
-//     Org.findByIdAndUpdate(req.profile._id,
-//         {"$push":{"eventList":req.event._id}},
-//         {"new":true,"upsert":"true"},
-//         (err,events) =>{
-//             if(err || !events) {
-//                 return res.status(400).json({
-//                     error:"Event List is not updated"
-//                 })
-//             }
-//             next();
-//         }
-//     )
-// }
+
 
 
 
