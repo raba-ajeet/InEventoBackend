@@ -23,6 +23,7 @@ exports.getOrg =(req,res)=>{
 
 exports.getEventList = (req,res) => {
     Event.find({org:req.profile._id})
+    .select("-photo")
     .populate("org","_id name")
     .exec((err,event) =>{
         if(err || !event){

@@ -4,10 +4,12 @@ const formidable = require('formidable');
 const fs=require('fs');
 
 exports.createEvent = (req,res) => {
-    req.body.org=req.profile._id;
+    // req.body.org=req.profile._id;
     let form = formidable.IncomingForm();
     form.keepExtensions=true;
     form.parse(req,(err,fields,file)=>{
+        fields.org=req.profile._id;
+        console.log(fields);
         let event = new Event(fields);
         if(file.photo){
             if(file.photo.size>3000000){
