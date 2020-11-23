@@ -45,6 +45,17 @@ exports.getBannerById = (req,res,next,id) => {
 exports.getBannerDetails = (req,res) => {
     req.banner.createdAt=undefined;
     req.banner.updatedAt=undefined;
+    req.banner.photo=undefined;
     res.json(req.banner);
 }
 
+exports.getAllBanners = (req,res) => {
+    Banner.find().select("-photo").exec((err,banners)=> {
+        if(err){
+            return res.status(400).json({
+                error:"no banners exists"
+            })
+        }
+        res.json({banners})
+    })
+}

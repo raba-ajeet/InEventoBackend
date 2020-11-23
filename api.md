@@ -12,3 +12,9 @@
 + /api/:orgid/event/create [POST] Bearer Token Required 
 + /api/events/date  [GET]  
 + /api/events/:eventId  [GET] 
+
+
+# Banner  
++ /api/banner/create/:orgId [POST] Bearer Token Required 
++ /api/banner  [GET]  
+

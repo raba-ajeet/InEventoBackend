@@ -17,6 +17,7 @@ exports.getOrg =(req,res)=>{
     req.profile.createdAt=undefined;
     req.profile.updatedAt=undefined;
     req.profile.password=undefined;
+    req.profile.photo=undefined;
     return res.json(req.profile);
 }
 
