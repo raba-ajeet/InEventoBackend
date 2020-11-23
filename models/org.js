@@ -24,6 +24,10 @@ var orgSchema = new mongoose.Schema({
     eventList:{
         type:Array,
         default:[],
+    },
+    role:{
+        type:String,
+        default:0
     }
 
 },{timestamps:true});

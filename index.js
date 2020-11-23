@@ -21,6 +21,7 @@ app.use(cors());
 const authRoutes = require('./routes/auth');
 const orgRoutes = require('./routes/org');
 const eventRoutes = require('./routes/event');
+const bannerRoutes = require('./routes/banner');
 
 // DB connection
 mongoose.connect(process.env.DATABASE,{
@@ -36,6 +37,7 @@ mongoose.connect(process.env.DATABASE,{
 app.use("/api",authRoutes);
 app.use("/api",orgRoutes);
 app.use("/api",eventRoutes);
+app.use("/api",bannerRoutes);
 
 
 app.get("/", (req,res)=>{
