@@ -24,6 +24,14 @@ var eventSchema = new mongoose.Schema({
         default:Date.now(),
         required:true,
     },
+    orgName:{
+        type:String,
+        trim:true
+    },
+    orgLogo:{
+        type:String,
+        trim:true
+    },
     org:{
         type:ObjectId,
         ref:"Org"

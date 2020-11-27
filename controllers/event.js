@@ -9,6 +9,9 @@ exports.createEvent = (req,res) => {
     form.keepExtensions=true;
     form.parse(req,(err,fields,file)=>{
         fields.org=req.profile._id;
+        fields.orgName=req.profile.name;
+        fields.orgLogo="https://nitw.ac.in/cii/static/media/IG-logo-WITHOUT-BG.97650f70.png";
+        fields.timing=new Date(fields.timing);
         console.log(fields);
         let event = new Event(fields);
         if(file.photo){
@@ -22,6 +25,7 @@ exports.createEvent = (req,res) => {
         }
         event.save((err,event)=> {
             if(err){
+                // console.log(err);
                 return res.status(400).json({
                     err:"not able to create a event"
                 })
@@ -38,11 +42,10 @@ exports.createEvent = (req,res) => {
                     console.log("list is updated");
                 }
             )
-            return res.json({
-                name:event.name,
-                id:event._id,
-                timing:event.timing
-            })
+            event.createdAt=undefined;
+            event.updatedAt=undefined;
+            event.photo=undefined;
+            return res.json(event)
         })
     })
     
