@@ -17,13 +17,12 @@ exports.getOrg =(req,res)=>{
     req.profile.createdAt=undefined;
     req.profile.updatedAt=undefined;
     req.profile.password=undefined;
-    req.profile.photo=undefined;
     return res.json(req.profile);
 }
 
 exports.getEventList = (req,res) => {
     Event.find({org:req.profile._id})
-    .select("-photo")
+    .select("-createdAt -updatedAt")
     .populate("org","_id name")
     .exec((err,event) =>{
         if(err || !event){

@@ -1,32 +1,20 @@
 const Banner = require("../models/banner");
-const formidable = require('formidable');
-const fs=require('fs');
+
 
 exports.createBanner = (req,res) => {
-    let form = formidable.IncomingForm();
-    form.keepExtensions=true;
-    form.parse(req,(err,fields,file)=>{
-        let banner = new Banner(fields);
-        if(file.photo){
-            if(file.photo.size>3000000){
-                return res.status(400).json({
-                    error:"File size is too Big"
-                })
-            }
-            banner.photo.data =fs.readFileSync(file.photo.path);
-            banner.photo.contentType = file.photo.type;
+    req.body.bannerImage=req.file.path;
+    const banner=new Banner(req.body);
+    console.log(req.file);
+    banner.save((err,banner)=> {
+        if(err){
+            return res.status(400).json({
+                err:"not able to create a event"
+            })
         }
-        banner.save((err,banner)=> {
-            if(err){
-                return res.status(400).json({
-                    err:"not able to create a event"
-                })
-            }
-            return res.json(banner);
-        })
+        banner.createAt=undefined;
+        banner.updatedAt=undefined;
+        return res.json(banner);
     })
-    
-    
 }
 
 
@@ -45,12 +33,11 @@ exports.getBannerById = (req,res,next,id) => {
 exports.getBannerDetails = (req,res) => {
     req.banner.createdAt=undefined;
     req.banner.updatedAt=undefined;
-    req.banner.photo=undefined;
     res.json(req.banner);
 }
 
 exports.getAllBanners = (req,res) => {
-    Banner.find().select("-photo").exec((err,banners)=> {
+    Banner.find().select("-createdAt -updatedAt").exec((err,banners)=> {
         if(err){
             return res.status(400).json({
                 error:"no banners exists"

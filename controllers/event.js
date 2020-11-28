@@ -1,31 +1,16 @@
 const Event = require("../models/event");
 const Org  = require("../models/org");
-const formidable = require('formidable');
-const fs=require('fs');
+
 
 exports.createEvent = (req,res) => {
-    // req.body.org=req.profile._id;
-    let form = formidable.IncomingForm();
-    form.keepExtensions=true;
-    form.parse(req,(err,fields,file)=>{
-        fields.org=req.profile._id;
-        fields.orgName=req.profile.name;
-        fields.orgLogo="https://nitw.ac.in/cii/static/media/IG-logo-WITHOUT-BG.97650f70.png";
-        fields.timing=new Date(fields.timing);
-        console.log(fields);
-        let event = new Event(fields);
-        if(file.photo){
-            if(file.photo.size>3000000){
-                return res.status(400).json({
-                    error:"File size is too Big"
-                })
-            }
-            event.photo.data =fs.readFileSync(file.photo.path);
-            event.photo.contentType = file.photo.type;
-        }
+        req.body.org=req.profile._id;
+        req.body.orgName=req.profile.name;
+        req.body.orgLogo=req.profile.orgLogo;
+        req.body.timing=req.body.timing ? new Date(req.body.timing) : Date.now();
+        req.body.eventImage=req.file.path;
+        let event = new Event(req.body);
         event.save((err,event)=> {
             if(err){
-                // console.log(err);
                 return res.status(400).json({
                     err:"not able to create a event"
                 })
@@ -44,11 +29,9 @@ exports.createEvent = (req,res) => {
             )
             event.createdAt=undefined;
             event.updatedAt=undefined;
-            event.photo=undefined;
             return res.json(event)
-        })
-    })
-    
+        }
+        )
     
 }
 
@@ -68,7 +51,6 @@ exports.getEventById = (req,res,next,id) => {
 exports.getEventDetails = (req,res) => {
     req.event.createdAt=undefined;
     req.event.updatedAt=undefined;
-    req.event.photo=undefined;
     res.json(req.event);
 }
 
@@ -78,7 +60,7 @@ exports.getEventByDate = (req,res) =>{
     let start = new Date(given_date.getFullYear(),given_date.getMonth(),given_date.getDate(),05,30,0);
     let end = new Date(given_date.getFullYear(),given_date.getMonth(),given_date.getDate(),28,59,59);
     Event.find({"timing": {"$gte": start, "$lt": end}})
-    .select("-photo")
+    .select("-createdAt -updatedAt")
     .then((events) => {
         if(!events) {
             return res.status(400).json({

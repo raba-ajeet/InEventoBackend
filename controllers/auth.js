@@ -1,43 +1,23 @@
 const Org = require('../models/org');
 var jwt =require("jsonwebtoken");
 var expressJwt = require('express-jwt');
-const formidable = require('formidable');
-const fs=require('fs');
 
-exports.signup = (req,res) =>{
-    let form = formidable.IncomingForm();
-    form.keepExtensions=true;
-    form.parse(req,(err,fields,file)=> {
+
+
+exports.signup = (req,res) => {
+    if(req.file ) req.body.orgLogo=req.file.path;
+    let org = new Org(req.body);
+    org.save((err,org)=>{
         if(err){
+            console.log(err);
             return res.status(400).json({
-                error:"problem with image"
+                err:"Not able to save user in db"
             })
         }
-        let org = new Org(fields);
-        if(file.photo){
-            if(file.photo.size>3000000){
-                return res.status(400).json({
-                    error:"File size is too Big"
-                })
-            }
-            org.photo.data =fs.readFileSync(file.photo.path);
-            org.photo.contentType = file.photo.type;
-            // console.log("checked image is looking good");
-        }
-        org.save((err,org)=>{
-            if(err){
-                console.log(err);
-                return res.status(400).json({
-                    err:"Not able to save user in db"
-                })
-            }
-            return res.json({
-                name:org.name,
-                email:org.email,
-                id:org._id
-            })
-        })
-    })   
+        org.createdAt=undefined;
+        org.updatedAt=undefined;
+        return res.json(org)
+    })
 }
 
 

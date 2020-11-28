@@ -17,9 +17,8 @@ var orgSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    photo:{
-        data:Buffer,
-        contentType:String,
+    orgLogo:{
+        type:String
     },
     eventList:{
         type:Array,

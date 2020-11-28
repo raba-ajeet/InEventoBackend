@@ -11,9 +11,8 @@ var eventSchema = new mongoose.Schema({
     description:{
         type:String
     },
-    photo:{
-        data:Buffer,
-        contentType:String,
+    eventImage:{
+        type:String
     },
     regLink:{
         type:String,

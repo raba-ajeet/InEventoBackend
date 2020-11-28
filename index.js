@@ -4,7 +4,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
+
+
+
 const port = 8000;
+
+app.use('/uploads',express.static('uploads'));
+
 
 //Middlewares
 const bodyParser = require('body-parser');

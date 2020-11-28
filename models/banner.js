@@ -11,9 +11,8 @@ var bannerSchema = new mongoose.Schema({
     description:{
         type:String
     },
-    photo:{
-        data:Buffer,
-        contentType:String,
+    bannerImage:{
+        type:String 
     },
     siteLink:{
         type:String,

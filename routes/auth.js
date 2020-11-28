@@ -3,7 +3,13 @@ const { signup, signin, signout,isSignedIn,isAuthenticated } = require("../contr
 var router = express.Router();
 
 
-router.post("/signup",signup);
+var {storage} = require('./filesupload');
+const multer = require('multer');
+
+var upload = multer({ storage: storage });
+
+
+router.post("/signup",upload.single('orgLogo'),signup);
 router.post("/signin", signin);
 router.get("/signout",signout);
 
