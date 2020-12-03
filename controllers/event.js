@@ -56,7 +56,7 @@ exports.getEventDetails = (req,res) => {
 
 exports.getEventByDate = (req,res) =>{
     let given_date=new Date();
-    if(req.body.timing) given_date=new Date(req.body.timing);
+    if(req.query.timing) given_date=new Date(req.query.timing);
     let start = new Date(given_date.getFullYear(),given_date.getMonth(),given_date.getDate(),05,30,0);
     let end = new Date(given_date.getFullYear(),given_date.getMonth(),given_date.getDate(),28,59,59);
     Event.find({"timing": {"$gte": start, "$lt": end}})

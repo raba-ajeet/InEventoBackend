@@ -11,7 +11,7 @@ exports.signup = (req,res) => {
         if(err){
             console.log(err);
             return res.status(400).json({
-                err:"Not able to save user in db"
+                error:"Not able to save user in db"
             })
         }
         org.createdAt=undefined;
@@ -26,7 +26,7 @@ exports.signin  = (req,res) => {
     Org.findOne({email},(err,org) => {
         if(err || !org) {
             return res.status(400).json({
-                error:"user email does not exist"
+                errror:"user email does not exist"
             })
         }
         if(!org.authenticate(password)){
@@ -36,7 +36,7 @@ exports.signin  = (req,res) => {
         }
          // create token
          const token = jwt.sign({_id:org._id},process.env.SECRET)
-
+        console.log("some one is making successful request");
          res.cookie("token",token,{expire:new Date()+1})
          const {_id,name,email}=org;
          return res.json({
