@@ -8,7 +8,7 @@ exports.createBanner = (req,res) => {
     banner.save((err,banner)=> {
         if(err){
             return res.status(400).json({
-                err:"not able to create a event"
+                error:"not able to create a event"
             })
         }
         banner.createAt=undefined;
@@ -44,5 +44,17 @@ exports.getAllBanners = (req,res) => {
             })
         }
         res.json({banners})
+    })
+}
+
+
+exports.deleteBanner = (req,res)  => {
+    Banner.findByIdAndDelete(req.banner._id).exec((err,banner)=> {
+        if(err ) {
+            return res.status(400).json({
+                error:"Failed to delete"
+            })
+        }
+        return res.json(banner);
     })
 }

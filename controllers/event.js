@@ -12,7 +12,7 @@ exports.createEvent = (req,res) => {
         event.save((err,event)=> {
             if(err){
                 return res.status(400).json({
-                    err:"not able to create a event"
+                    error:"not able to create a event"
                 })
             }
             Org.findByIdAndUpdate(req.profile._id,
@@ -65,6 +65,28 @@ exports.getEventByDate = (req,res) =>{
         if(!events) {
             return res.status(400).json({
                 err:"no event exist at particular date"
+            })
+        }
+        return res.json(events);
+    })
+}
+
+exports.deleteEvent = (req,res)  => {
+    Event.findByIdAndDelete(req.event._id).exec((err,event)=> {
+        if(err ) {
+            return res.status(400).json({
+                error:"Failed to delete"
+            })
+        }
+        return res.json(event);
+    })
+}
+
+exports.getAllEvents = (req,res) => {
+    Event.find().select("-createdAt -updatedAt").exec((err,events)=> {
+        if(err){
+            return res.status(400).json({
+                error:"Failed to load all events"
             })
         }
         return res.json(events);

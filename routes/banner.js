@@ -5,6 +5,7 @@ const {
   getBannerById,
   getBannerDetails,
   getAllBanners,
+  deleteBanner,
 } = require("../controllers/banner");
 const { getOrgById } = require("../controllers/org");
 
@@ -28,5 +29,7 @@ router.post(
 );
 router.get("/banner", getAllBanners);
 router.get("/banner/:bannerId", getBannerDetails);
+router.delete("/:orgId/banner/:bannerId",isSignedIn,isAuthenticated,isAdmin,deleteBanner);
+
 
 module.exports = router;
