@@ -51,6 +51,6 @@ app.get("/", (req,res)=>{
 })
  
 
-app.listen(process.config.PORT, ()=>{
+app.listen(process.env.PORT, ()=>{
     console.log("server is up and runing\n");
 });
