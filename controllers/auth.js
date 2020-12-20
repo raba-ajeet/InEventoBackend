@@ -55,7 +55,7 @@ exports.signout =(req,res) => {
 }
 
 exports.isSignedIn = expressJwt({
-    secret:process.env.SECRET,
+    secret:SECRET,
     userProperty:"auth",
     algorithms: ['HS256']
 });
