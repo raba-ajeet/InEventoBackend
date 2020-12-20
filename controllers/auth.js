@@ -2,6 +2,7 @@ const Org = require('../models/org');
 var jwt =require("jsonwebtoken");
 var expressJwt = require('express-jwt');
 
+const SECRET="inevento";
 
 
 exports.signup = (req,res) => {
@@ -35,7 +36,7 @@ exports.signin  = (req,res) => {
             })
         }
          // create token
-         const token = jwt.sign({_id:org._id},process.env.SECRET)
+         const token = jwt.sign({_id:org._id},SECRET)
         console.log("some one is making successful request");
          res.cookie("token",token,{expire:new Date()+1})
          const {_id,name,email,role}=org;

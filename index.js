@@ -30,7 +30,7 @@ const eventRoutes = require('./routes/event');
 const bannerRoutes = require('./routes/banner');
 
 // DB connection
-mongoose.connect(process.env.DATABASE,{
+mongoose.connect("mongodb+srv://admin:admin1234@cluster0.s298g.mongodb.net/inevento?retryWrites=true&w=majority",{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
