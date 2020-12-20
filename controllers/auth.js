@@ -36,7 +36,7 @@ exports.signin  = (req,res) => {
             })
         }
          // create token
-         const token = jwt.sign({_id:org._id},SECRET)
+         const token = jwt.sign({_id:org._id},"inevento")
         console.log("some one is making successful request");
          res.cookie("token",token,{expire:new Date()+1})
          const {_id,name,email,role}=org;
@@ -55,7 +55,7 @@ exports.signout =(req,res) => {
 }
 
 exports.isSignedIn = expressJwt({
-    secret:SECRET,
+    secret:"inevento",
     userProperty:"auth",
     algorithms: ['HS256']
 });
