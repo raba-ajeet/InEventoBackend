@@ -7,7 +7,7 @@ const app = express();
 
 
 
-const port = 8000;
+
 
 app.use('/uploads',express.static('uploads'));
 
@@ -52,5 +52,6 @@ app.get("/", (req,res)=>{
  
 
 app.listen(process.env.PORT, ()=>{
+    console.log(process.env.PORT);
     console.log("server is up and runing\n");
 });
