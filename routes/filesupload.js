@@ -8,12 +8,5 @@ const multer = require('multer');
     }
 })
 
-var fileFilter = (req,file,cb) => {
-    if(file.mimetype==='images/jpeg' || file.mimetype === 'images/png' ||  file.mimetype==='images/jpg'){
-        cb(null,true);
-    }
-    else{
-        cb(null,false);
-    }
-}
+
 module.exports =  {storage:storage};

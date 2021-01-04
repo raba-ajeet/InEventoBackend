@@ -2,7 +2,7 @@ const Org = require('../models/org');
 var jwt =require("jsonwebtoken");
 var expressJwt = require('express-jwt');
 
-const SECRET="inevento";
+
 
 
 exports.signup = (req,res) => {
